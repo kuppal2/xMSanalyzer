@@ -1,5 +1,5 @@
 evaluate.Samples <-
-function(curdata, numreplicates, alignment.tool, cormethod="pearson",missingvalue=0,ignore.missing=TRUE,replace.bad.replicates=TRUE)
+function(curdata, numreplicates, alignment.tool, cormethod="pearson",missingvalue=0,ignore.missing=TRUE,replace.bad.replicates=TRUE,col_end=NA)
 {
 
         if(alignment.tool=="apLCMS")
@@ -14,16 +14,27 @@ function(curdata, numreplicates, alignment.tool, cormethod="pearson",missingvalu
               }
               else
               {
-                    stop(paste("Invalid value for alignment.tool. Please use either \"apLCMS\" or \"XCMS\"", sep=""))
-              }
+		if(is.na(alignment.tool)==TRUE){
+			
+			
+		      #stop(paste("Invalid value for alignment.tool. Please use either \"apLCMS\" or \"XCMS\"", sep=""))
+              	}
+		      #col_end=NA
+	      }
         }
        
 	rnames<-colnames(curdata)
+	
+	if(is.na(col_end)==FALSE){
         rnames<-rnames[-c(1:col_end)]
+		}
         rnames=rnames[seq(1,length(rnames),numreplicates)]
         finalmat={}
- 
+ 	if(is.na(col_end)==FALSE){
         curdata_int=curdata[,-c(1:col_end)]
+		}else{
+		curdata_int=curdata
+		}
         numsamp=dim(curdata_int)[2]
        
        curdata<-apply(curdata,2,as.numeric)
