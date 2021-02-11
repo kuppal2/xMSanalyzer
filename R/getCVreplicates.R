@@ -17,7 +17,7 @@ function(curdata,alignment.tool,numreplicates, min.samp.percent=0.6,impute.bool=
               else
               {
 			  col_end=2
-		     print("**Using the first two columns as mz and retention time for PID calculation**")
+		     print("**Using the first two columns as mz and retention time for CV calculation**")
                     #stop(paste("Invalid value for alignment.tool. Please use either \"apLCMS\" or \"XCMS\"", sep=""))
               }
         }
@@ -45,7 +45,7 @@ function(curdata,alignment.tool,numreplicates, min.samp.percent=0.6,impute.bool=
                 finalmat={}
 		
 		
-		cl<-makeSOCKcluster(5)
+		cl<-makeCluster(5)
 			
 		
 		
