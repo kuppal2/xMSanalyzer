@@ -1,7 +1,8 @@
 evaluate.Samples <-
-function(curdata, numreplicates, alignment.tool, cormethod="pearson",missingvalue=0,ignore.missing=TRUE,replace.bad.replicates=TRUE,col_end=NA)
+function(curdata, numreplicates=2, alignment.tool=NA, cormethod="pearson",missingvalue=0,ignore.missing=TRUE,replace.bad.replicates=TRUE,col_end=NA)
 {
 
+	if(is.na(alignment.tool)==FALSE){
         if(alignment.tool=="apLCMS")
         {
               col_end=4
@@ -22,7 +23,11 @@ function(curdata, numreplicates, alignment.tool, cormethod="pearson",missingvalu
 		      #col_end=NA
 	      }
         }
-       
+	}
+	
+        if(numreplicates<3){
+		replace.bad.replicates=FALSE
+		}
 	rnames<-colnames(curdata)
 	
 	if(is.na(col_end)==FALSE){
@@ -118,8 +123,10 @@ function(curdata, numreplicates, alignment.tool, cormethod="pearson",missingvalu
 			}
 		}
 		if(replace.bad.replicates==TRUE){
-		curdata<-cbind(curdata[,c(1:col_end)],curdata_int)
-		curdata<-replace(as.matrix(curdata),which(is.na(curdata)==TRUE),0)
+			
+			
+			curdata<-cbind(curdata[,c(1:col_end)],curdata_int)
+			curdata<-replace(as.matrix(curdata),which(is.na(curdata)==TRUE),0)
 		}
 		
 	colnames(finalmat)<-cnames
